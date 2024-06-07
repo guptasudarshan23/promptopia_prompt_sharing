@@ -64,4 +64,20 @@ const UpdatePrompt = () => {
   );
 };
 
+export async function getServerSideProps(context) {
+  const { id } = context.query;
+  const response = await fetch(`http://localhost:3000/api/prompt/${id}`);
+  const data = await response.json();
+
+  return {
+    props: {
+      initialData: {
+        id,
+        prompt: data.prompt,
+        tag: data.tag,
+      },
+    },
+  };
+}
+
 export default UpdatePrompt;
